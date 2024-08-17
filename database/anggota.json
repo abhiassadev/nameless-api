@@ -2,7 +2,7 @@
     {
        "id": 1,
        "name": "Fatih",
-       "photo": "http://localhost:5000/image/profile/fathih.jpeg",
+       "photo": "https://nameless-api.vercer.com/image/profile/fathih.jpeg",
        "position": "ketua",
        "instagram": "https://www.instagram.com/dzfathih_06?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
     },
