@@ -13,11 +13,11 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api-anggota', (req, res) => {
-    const data = fs.readFileSync('./database/anggota.json', 'utf-8');
+    const dataPath = path.join(__dirname, 'database', 'anggota.json');
+    const data = fs.readFileSync(dataPath, 'utf-8');
     const dataParse = JSON.parse(data);
 
-    res.send(dataParse)
-    res.end();
+    res.send(dataParse);
 });
 
 app.get('/api-galeri', (req, res) => {
