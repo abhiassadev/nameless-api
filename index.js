@@ -13,11 +13,16 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api-anggota', (req, res) => {
-    const dataPath = path.join(__dirname, 'database', 'anggota.json');
-    const data = fs.readFileSync(dataPath, 'utf-8');
-    const dataParse = JSON.parse(data);
+    try {
+        const dataPath = path.join(__dirname, 'database', 'anggota.json');
+        const data = fs.readFileSync(dataPath, 'utf-8');
+        const dataParse = JSON.parse(data);
 
-    res.send(dataParse);
+        res.send(dataParse);
+    } catch (err) {
+        console.error('Error reading file:', err);
+        req.status(500).send('Internal server error') 
+    }
 });
 
 app.get('/api-galeri', (req, res) => {
