@@ -14,8 +14,9 @@ app.get('/', (req, res) => {
 
 app.get('/api-anggota', (req, res) => {
     try {
-        // const dataPath = path.join(__dirname, 'database', 'anggota.json');
-        const data = fs.readFileSync('./database/anggota.json', 'utf-8');
+        const dataPath = path.join(__dirname, 'database', 'anggota.json');
+        const data = fs.readFileSync(dataPath, 'utf-8');
+        console.log('Reading file from:', dataPath)
         const dataParse = JSON.parse(data);
 
         res.json(dataParse);
