@@ -2,49 +2,49 @@
     {
        "id": 1,
        "name": "Fatih",
-       "photo": "http://localhost:5000/image/profile/fathih.jpeg",
+       "photo": "http://localhost:/image/profile/fathih.jpeg",
        "position": "ketua",
        "instagram": "https://www.instagram.com/dzfathih_06?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
     },
     {
        "id": 2,
        "name": "Fahri",
-       "photo": "http://localhost:5000/image/profile/fahri.jpeg",
-       "position": "Seksi dokumentasi",
+       "photo": "https://res.cloudinary.com/dly5mdfrl/image/upload/v1723885121/fahri_f9nfnd.jpg",
+       "position": "Dokumentasi",
        "instagram": "https://www.instagram.com/secc.faiii?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
     },
     {
        "id": 3,
        "name": "Alif",
-       "photo": "http://localhost:5000/image/profile/alif.jpeg",
+       "photo": "https://res.cloudinary.com/dly5mdfrl/image/upload/v1723885122/alif_uplsqo.jpg",
        "position": "Anggota",
        "instagram": "https://www.instagram.com/salmon44464?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
     },
     {
        "id": 4,
        "name": "Fatir",
-       "photo": "http://localhost:5000/image/profile/fatir.jpeg",
+       "photo": "https://res.cloudinary.com/dly5mdfrl/image/upload/v1723885123/fatir_pwwn9o.jpg",
        "position": "Anggota",
        "instagram": "https://www.tiktok.com/@tirdinan?is_from_webapp=1&sender_device=pc"
     },
     {
        "id": 5,
        "name": "Radit",
-       "photo": "http://localhost:5000/image/profile/radit.jpeg",
+       "photo": "https://res.cloudinary.com/dly5mdfrl/image/upload/v1723885122/radit_hk4lgl.jpg",
        "position": "Sekertaris",
        "instagram": "https://www.instagram.com/radt_hehe?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
     },
     {
        "id": 6,
        "name": "Rifky",
-       "photo": "http://localhost:5000/image/profile/rifky.jpeg",
+       "photo": "https://res.cloudinary.com/dly5mdfrl/image/upload/v1723885123/rifky_ipxqsg.jpg",
        "position": "Bendahara",
        "instagram": "https://www.instagram.com/rfkyudha_98?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
     },
     {
        "id": 7,
        "name": "Raga",
-       "photo": "http://localhost:5000/image/profile/raga.jpeg",
+       "photo": "https://res.cloudinary.com/dly5mdfrl/image/upload/v1723885122/raga_xrxpnu.jpg",
        "position": "Anggota",
        "instagram": "https://www.instagram.com/hwr_aga?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
     },
@@ -72,7 +72,7 @@
     {
        "id": 11,
        "name": "Gibran",
-       "photo": "http://localhost:5000/image/profile/Logo Nameless.jpeg",
+       "photo": "https://res.cloudinary.com/dly5mdfrl/image/upload/v1723885122/gibran_xlypys.jpg",
        "position": "Anggota",
        "instagram": "https://www.instagram.com/wafiegbrn_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
     }
