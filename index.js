@@ -18,7 +18,7 @@ app.get('/api-anggota', (req, res) => {
         const data = fs.readFileSync(dataPath, 'utf-8');
         const dataParse = JSON.parse(data);
 
-        res.send(dataParse);
+        res.json(dataParse);
     } catch (err) {
         console.error('Error reading file:', err);
         req.status(500).send('Internal server error') 
