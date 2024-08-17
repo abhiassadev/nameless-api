@@ -1,0 +1,79 @@
+[
+    {
+       "id": 1,
+       "name": "Fatih",
+       "photo": "http://localhost:5000/image/profile/fathih.jpeg",
+       "position": "ketua",
+       "instagram": "https://www.instagram.com/dzfathih_06?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+    },
+    {
+       "id": 2,
+       "name": "Fahri",
+       "photo": "http://localhost:5000/image/profile/fahri.jpeg",
+       "position": "Seksi dokumentasi",
+       "instagram": "https://www.instagram.com/secc.faiii?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+    },
+    {
+       "id": 3,
+       "name": "Alif",
+       "photo": "http://localhost:5000/image/profile/alif.jpeg",
+       "position": "Anggota",
+       "instagram": "https://www.instagram.com/salmon44464?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+    },
+    {
+       "id": 4,
+       "name": "Fatir",
+       "photo": "http://localhost:5000/image/profile/fatir.jpeg",
+       "position": "Anggota",
+       "instagram": "https://www.tiktok.com/@tirdinan?is_from_webapp=1&sender_device=pc"
+    },
+    {
+       "id": 5,
+       "name": "Radit",
+       "photo": "http://localhost:5000/image/profile/radit.jpeg",
+       "position": "Sekertaris",
+       "instagram": "https://www.instagram.com/radt_hehe?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+    },
+    {
+       "id": 6,
+       "name": "Rifky",
+       "photo": "http://localhost:5000/image/profile/rifky.jpeg",
+       "position": "Bendahara",
+       "instagram": "https://www.instagram.com/rfkyudha_98?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+    },
+    {
+       "id": 7,
+       "name": "Raga",
+       "photo": "http://localhost:5000/image/profile/raga.jpeg",
+       "position": "Anggota",
+       "instagram": "https://www.instagram.com/hwr_aga?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+    },
+    {
+       "id": 8,
+       "name": "Rehan",
+       "photo": "http://localhost:5000/image/profile/Logo Nameless.jpeg",
+       "position": "Anggota",
+       "instagram": "https://www.instagram.com/inirehannnnn?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+    },
+    {
+       "id": 9,
+       "name": "Dude",
+       "photo": "http://localhost:5000/image/profile/Logo Nameless.jpeg",
+       "position": "Anggota",
+       "instagram": "https://www.instagram.com/dzfathih_06?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+    },
+    {
+       "id": 10,
+       "name": "Aih",
+       "photo": "http://localhost:5000/image/profile/Logo Nameless.jpeg",
+       "position": "Anggota",
+       "instagram": "https://www.instagram.com/dzfathih_06?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+    },
+    {
+       "id": 11,
+       "name": "Gibran",
+       "photo": "http://localhost:5000/image/profile/Logo Nameless.jpeg",
+       "position": "Anggota",
+       "instagram": "https://www.instagram.com/wafiegbrn_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+    }
+]
