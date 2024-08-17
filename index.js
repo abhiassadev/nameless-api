@@ -21,7 +21,7 @@ app.get('/api-anggota', (req, res) => {
         res.json(dataParse);
     } catch (err) {
         console.error('Error reading file:', err);
-        req.status(500).send('Internal server error') 
+        res.status(500).send('Internal server error') 
     }
 });
 
@@ -52,3 +52,5 @@ app.get('/api-pengumuman', (req, res) => {
 app.listen(port, () => {
     console.log(`Server running on port http://localhost:${port}`);
 });
+
+module.exports = app;
