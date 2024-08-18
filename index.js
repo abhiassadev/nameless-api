@@ -5,7 +5,12 @@ const cors = require('cors');
 const app = express();
 const port = 5000;
 
-app.use(cors());
+app.use(cors, (req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
@@ -34,15 +39,11 @@ app.get('/api-galeri', (req, res) => {
     res.end();
 });
 
-app.get('/api-jadwal-rapat', (req, res) => {
-    const data = fs.readFileSync('./database/jadwalRapat.json', 'utf-8');
-    const dataParse = JSON.parse(data);
-
-    res.send(dataParse)
-    res.end();
+app.get('/members', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'members.html'));
 });
 
-app.get('/api-pengumuman', (req, res) => {
+app.get('/gallery', (req, res) => {
     const data = fs.readFileSync('./database/pengumuman.json', 'utf-8');
     const dataParse = JSON.parse(data);
 

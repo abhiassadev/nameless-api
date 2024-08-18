@@ -17,10 +17,10 @@
           <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav gap-3">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/">Home</a>
+                <a class="nav-link" aria-current="page" href="#">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/members">Members</a>
+                <a class="nav-link active" href="#">Members</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Gallery</a>
@@ -38,9 +38,15 @@
           </div>
         </div>
       </nav>
-    <div class="container-fluid d-flex p-5 gap-2 justify-content-center flex-column align-items-center">
-        <h2 class="text-info">Welcome To Nameless</h2>
-        <h3 class="text-info">Management System</h3>
-    </div>
+    <div id="membersPlace" class="container-fluid d-grid p-5 gap-2 justify-content-center align-items-center"></div>
+    <script>
+      const memberPlace = document.getElementById('membersPlace');
+
+      fetch('https://nameless-api.vercel.com/api-anggota')
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      })
+    </script>
 </body>
 </html>
