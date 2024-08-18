@@ -14,7 +14,6 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(express.static('public'));
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -80,6 +79,8 @@ app.get('/delete/:name', (req, res) => {
         res.status(500).send('Internal server error');
    }
 });
+
+app.use(express.static('public'));
 
 app.listen(port, () => {
     console.log(`Server running on port http://localhost:${port}`);
