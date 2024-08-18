@@ -87,7 +87,7 @@
     <script>
       const dataPlace = document.getElementById('dataPlace');
 
-      fetch('../database/anggota.json')
+      fetch('https://nameless-api.vercel.app/api-anggota')
       .then(response => response.json())
       .then(data => {
         var output = '';
