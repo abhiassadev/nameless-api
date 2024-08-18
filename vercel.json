@@ -12,13 +12,10 @@
             "dest": "index.js"
         },
         {
-<<<<<<< HEAD
-=======
             "src": "/members",
             "dest": "index.js"
         },
         {
->>>>>>> 66062dce7439861310619f8ea7380a232c433f2e
             "src": "/add",
             "dest": "index.js"
         },
