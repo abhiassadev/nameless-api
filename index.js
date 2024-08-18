@@ -6,6 +6,7 @@ const app = express();
 const port = 5000;
 
 app.use(cors());
+app.use(express.urlencoded());
 
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -45,12 +46,24 @@ app.get('/members', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'members.html'));
 });
 
-app.get('/gallery', (req, res) => {
-    const data = fs.readFileSync('./database/pengumuman.json', 'utf-8');
-    const dataParse = JSON.parse(data);
+app.post('/add', (req, res) => {
+    const dataPath = path.join(__dirname, 'database', 'anggota.json');
+    const dataOnDb = fs.readFileSync(dataPath, 'utf-8');
+    const dataParse = JSON.parse(dataOnDb);
 
-    res.send(dataParse)
-    res.end();
+    dataParse.push(req.body);
+    fs.writeFileSync(dataPath, JSON.stringify(dataParse));
+    res.redirect('/members');
+});
+
+app.get('/delete/:name', (req, res) => {
+    const dataPath = path.join(__dirname, 'database', 'anggota.json');
+    const dataOnDb = fs.readFileSync(dataPath, 'utf-8');
+    const dataParse = JSON.parse(dataOnDb);
+    const deleteData = dataParse.filter((data) => data.name !== req.params.name);
+
+    fs.writeFileSync(dataPath, JSON.stringify(deleteData));
+    res.redirect('/members');
 });
 
 app.listen(port, () => {

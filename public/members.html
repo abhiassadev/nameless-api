@@ -35,18 +35,77 @@
                 </ul>
               </li>
             </ul>
+            <div class="container-fluid justify-content-end d-flex">
+              <button class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button" aria-controls="offcanvas">Add members</button>
+            </div>
           </div>
         </div>
       </nav>
-    <div id="membersPlace" class="container-fluid d-grid p-5 gap-2 justify-content-center align-items-center"></div>
+    <div class="">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Photo</th>
+            <th scope="col">Name</th>
+            <th scope="col">Position</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody id="dataPlace"></tbody>
+      </table>
+    </div>
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasExampleLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Add Members</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <form action="/add" method="POST">
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Enter name..." name="name">
+          </div>
+          <div class="mb-3">
+            <label for="postion" class="form-label">Position</label>
+            <input type="text" class="form-control" id="position" placeholder="Enter position..." name="position">
+          </div>
+          <div class="mb-3">
+            <label for="social" class="form-label">Social</label>
+            <input type="text" class="form-control" id="social" placeholder="https://www.instagram.com/username" name="social">
+          </div>
+          <div class="mb-3">
+            <label for="photo" class="form-label">Photo Link</label>
+            <input type="text" class="form-control" id="photo" placeholder="https://photo.com" name="">
+          </div>
+          <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
     <script>
-      // const memberPlace = document.getElementById('membersPlace');
+      const dataPlace = document.getElementById('dataPlace');
 
-      // fetch('https://nameless-api.vercel.com/api-anggota')
-      // .then(response => response.json())
-      // .then(data => {
-      //   console.log(data);
-      // })
+      fetch('https://nameless-api.vercel.app/api-anggota')
+      .then(response => response.json())
+      .then(data => {
+        var output = '';
+console.log(data)
+        data.forEach((data, index) => {
+          output += `
+           <tr>
+            <th scope="row">${index + 1}</th>
+            <td><img src="${data.photo}" style="width: 30px; height: 30px; border-radius: 100%;"></td>
+            <td>${data.name}</td>
+            <td>${data.position}</td>
+            <td><a href="/delete/${data.name}" class="btn btn-danger badge">Delete</a></td>
+          </tr>
+          `
+        })
+
+        dataPlace.innerHTML = output;
+      })
     </script>
 </body>
 </html>
