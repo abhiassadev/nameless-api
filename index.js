@@ -51,6 +51,7 @@ app.get('/members', (req, res) => {
 });
 
 app.post('/add', (req, res) => {
+    console.log('POST /add toute hit')
     try {
         const dataPath = path.join(__dirname, 'database', 'anggota.json');
         const dataOnDb = fs.readFileSync(dataPath, 'utf-8');
