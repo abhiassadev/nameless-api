@@ -12,6 +12,14 @@
             "dest": "index.js"
         },
         {
+            "src": "/add",
+            "dest": "index.js"
+        },
+        {
+            "src": "/delete/(.*)",
+            "dest": "index.js"
+        },
+        {
             "src": "/(.*)",
             "dest": "/public/$1"
         }

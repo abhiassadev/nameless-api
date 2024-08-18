@@ -34,36 +34,46 @@ app.get('/api-anggota', (req, res) => {
     }
 });
 
-app.get('/api-galeri', (req, res) => {
-    const data = fs.readFileSync('./database/galeri.json', 'utf-8');
-    const dataParse = JSON.parse(data);
+// app.get('/api-galeri', (req, res) => {
+//     const data = fs.readFileSync('./database/galeri.json', 'utf-8');
+//     const dataParse = JSON.parse(data);
 
-    res.send(dataParse)
-    res.end();
-});
+//     res.send(dataParse)
+//     res.end();
+// });
 
 app.get('/members', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'members.html'));
 });
 
 app.post('/add', (req, res) => {
-    const dataPath = path.join(__dirname, 'database', 'anggota.json');
-    const dataOnDb = fs.readFileSync(dataPath, 'utf-8');
-    const dataParse = JSON.parse(dataOnDb);
+    try {
+        const dataPath = path.join(__dirname, 'database', 'anggota.json');
+        const dataOnDb = fs.readFileSync(dataPath, 'utf-8');
+        const dataParse = JSON.parse(dataOnDb);
 
-    dataParse.push(req.body);
-    fs.writeFileSync(dataPath, JSON.stringify(dataParse));
-    res.redirect('/members');
+        dataParse.push(req.body);
+        fs.writeFileSync(dataPath, JSON.stringify(dataParse));
+        res.redirect('/members');
+    } catch (err) {
+        console.error('Error reading file:', err);
+        res.status(500).send('Internal server error')
+    }
 });
 
 app.get('/delete/:name', (req, res) => {
-    const dataPath = path.join(__dirname, 'database', 'anggota.json');
-    const dataOnDb = fs.readFileSync(dataPath, 'utf-8');
-    const dataParse = JSON.parse(dataOnDb);
-    const deleteData = dataParse.filter((data) => data.name !== req.params.name);
-
-    fs.writeFileSync(dataPath, JSON.stringify(deleteData));
-    res.redirect('/members');
+    try {
+        const dataPath = path.join(__dirname, 'database', 'anggota.json');
+        const dataOnDb = fs.readFileSync(dataPath, 'utf-8');
+        const dataParse = JSON.parse(dataOnDb);
+        const deleteData = dataParse.filter((data) => data.name !== req.params.name);
+       
+        fs.writeFileSync(dataPath, JSON.stringify(deleteData));
+        res.redirect('/members');
+    } catch (err) {
+        console.error('Error reading file:', err);
+        res.status(500).send('Internal server error')
+    }
 });
 
 app.listen(port, () => {
