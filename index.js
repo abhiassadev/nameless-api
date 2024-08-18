@@ -55,7 +55,7 @@ app.post('/add', (req, res) => {
         const dataPath = path.join(__dirname, 'database', 'anggota.json');
         const dataOnDb = fs.readFileSync(dataPath, 'utf-8');
         const dataParse = JSON.parse(dataOnDb);
-console.log(dataPath)
+         console.log('Reading file from:', dataPath)
         dataParse.push(req.body);
         fs.writeFileSync(dataPath, JSON.stringify(dataParse));
         res.redirect('/members');
@@ -71,6 +71,7 @@ app.get('/delete/:name', (req, res) => {
         const dataOnDb = fs.readFileSync(dataPath, 'utf-8');
         const dataParse = JSON.parse(dataOnDb);
         const deleteData = dataParse.filter((data) => data.name !== req.params.name);
+        console.log('Reading file from:', dataPath)
 
         fs.writeFileSync(dataPath, JSON.stringify(deleteData));
         res.redirect('/members');
