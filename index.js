@@ -55,7 +55,7 @@ app.post('/add', (req, res) => {
         const dataPath = path.join(__dirname, 'database', 'anggota.json');
         const dataOnDb = fs.readFileSync(dataPath, 'utf-8');
         const dataParse = JSON.parse(dataOnDb);
-
+console.log(dataPath)
         dataParse.push(req.body);
         fs.writeFileSync(dataPath, JSON.stringify(dataParse));
         res.redirect('/members');
