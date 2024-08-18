@@ -6,7 +6,7 @@ const app = express();
 const port = 5000;
 
 app.use(cors());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -14,7 +14,6 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(express.static('public'));
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -30,7 +29,7 @@ app.get('/api-anggota', (req, res) => {
         res.json(dataParse);
     } catch (err) {
         console.error('Error reading file:', err);
-        res.status(500).send('Internal server error') 
+        res.status(500).send('Internal server error');
     }
 });
 
@@ -43,10 +42,16 @@ app.get('/api-anggota', (req, res) => {
 // });
 
 app.get('/members', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'members.html'));
+    try {
+        res.sendFile(path.join(__dirname, 'public', 'members.html'));
+    } catch (err) {
+        console.error('Error reading file:', err);
+        res.status(500).send('Internal server error');
+    }
 });
 
 app.post('/add', (req, res) => {
+    console.log('POST /add toute hit')
     try {
         const dataPath = path.join(__dirname, 'database', 'anggota.json');
         const dataOnDb = fs.readFileSync(dataPath, 'utf-8');
@@ -67,6 +72,7 @@ app.get('/delete/:name', (req, res) => {
         const dataOnDb = fs.readFileSync(dataPath, 'utf-8');
         const dataParse = JSON.parse(dataOnDb);
         const deleteData = dataParse.filter((data) => data.name !== req.params.name);
+
        
         fs.writeFileSync(dataPath, JSON.stringify(deleteData));
         res.redirect('/members');
@@ -74,7 +80,9 @@ app.get('/delete/:name', (req, res) => {
         console.error('Error reading file:', err);
         res.status(500).send('Internal server error')
     }
-});
+})
+
+app.use(express.static('public'));
 
 app.listen(port, () => {
     console.log(`Server running on port http://localhost:${port}`);
