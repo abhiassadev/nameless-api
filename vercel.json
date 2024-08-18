@@ -12,10 +12,6 @@
             "dest": "index.js"
         },
         {
-            "src": "/(.*)",
-            "dest": "/public/$1"
-        },
-        {
             "src": "/members",
             "dest": "index.js"
         },
@@ -26,6 +22,10 @@
         {
             "src": "/delete/(.*)",
             "dest": "index.js"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/public/$1"
         }
     ]
 }
