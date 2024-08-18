@@ -72,7 +72,7 @@ app.get('/delete/:name', (req, res) => {
         const dataOnDb = fs.readFileSync(dataPath, 'utf-8');
         const dataParse = JSON.parse(dataOnDb);
         const deleteData = dataParse.filter((data) => data.name !== req.params.name);
-        console.log('Reading file from:', dataPath)
+        console.log('Reading file from:', dataParse)
 
         fs.writeFileSync(dataPath, JSON.stringify(deleteData));
         res.redirect('/members');
