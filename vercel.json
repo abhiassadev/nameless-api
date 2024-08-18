@@ -17,7 +17,7 @@
         },
         {
             "src": "/members",
-            "dest": "index.js"
+            "dest": "/index.js"
         }
     ]
 }
