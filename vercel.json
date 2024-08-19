@@ -27,5 +27,8 @@
             "src": "/(.*)",
             "dest": "/public/$1"
         }
+    ],
+    "files": [
+        "database/anggota.json"
     ]
 }
