@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 
 app.get('/api-anggota', (req, res) => {
     try {
-        const dataPath = path.join(__dirname, 'database', 'anggota.json');
+        const dataPath = path.join('/tmp', 'anggota.json');
         const data = fs.readFileSync(dataPath, 'utf-8');
         const dataParse = JSON.parse(data);
 
@@ -52,7 +52,7 @@ app.get('/members', (req, res) => {
 app.post('/add', (req, res) => {
     console.log('POST /add toute hit')
     try {
-        const dataPath = path.join(__dirname, 'database', 'anggota.json');
+        const dataPath = path.join('/tmp', 'anggota.json');
         const dataOnDb = fs.readFileSync(dataPath, 'utf-8');
         const dataParse = JSON.parse(dataOnDb);
 
@@ -67,7 +67,7 @@ app.post('/add', (req, res) => {
 
 app.get('/delete/:name', (req, res) => {
     try {
-        const dataPath = path.join(__dirname, 'database', 'anggota.json');
+        const dataPath = path.join('/tmp', 'anggota.json');
         const dataOnDb = fs.readFileSync(dataPath, 'utf-8');
         const dataParse = JSON.parse(dataOnDb);
         const deleteData = dataParse.filter((data) => data.name !== req.params.name);
