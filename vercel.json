@@ -8,9 +8,13 @@
     ],
     "routes": [
         {
-            "src": "/api-anggota",
+            "src": "/members-api",
             "dest": "index.js"
         },
+{
+"src": "/gallery-api",
+"dest": "index.js"
+},
         {
             "src": "/members",
             "dest": "index.js"
