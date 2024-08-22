@@ -71,7 +71,7 @@ app.post('/add', upload.single('photo'), async (req, res) => {
         res.redirect('/members');
     } catch (err) {
         return console.error('Error:', err);
-        res.status(500).send('Error...');
+        res.status(500).send('Error:', err);
     }
 });
 
