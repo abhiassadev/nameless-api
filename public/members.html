@@ -17,21 +17,21 @@
           <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav gap-3">
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="#">Home</a>
+                <a class="nav-link" aria-current="page" href="/">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="#">Members</a>
+                <a class="nav-link active" href="/members">Members</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Gallery</a>
+                <a class="nav-link" href="/gallery">Gallery</a>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   API
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="/api-anggota">Members API</a></li>
-                  <li><a class="dropdown-item" href="/api-galeri">Gallery API</a></li>
+                  <li><a class="dropdown-item" href="/members-api">Members API</a></li>
+                  <li><a class="dropdown-item" href="/gallery-api">Gallery API</a></li>
                 </ul>
               </li>
             </ul>
@@ -61,7 +61,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body">
-        <form action="/add" method="POST">
+        <form action="/add" method="POST" enctype="multipart/form-data">
           <div class="mb-3">
             <label for="name" class="form-label">Name</label>
             <input type="text" class="form-control" id="name" placeholder="Enter name..." name="name">
@@ -75,8 +75,8 @@
             <input type="text" class="form-control" id="social" placeholder="https://www.instagram.com/username" name="social">
           </div>
           <div class="mb-3">
-            <label for="photo" class="form-label">Photo Link</label>
-            <input type="text" class="form-control" id="photo" placeholder="https://photo.com" name="photo">
+            <label for="photo" class="form-label">Photo</label>
+            <input type="file" class="form-control" id="photo" placeholder="Input Photo..." name="photo">
           </div>
           <div class="mb-3">
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -87,7 +87,7 @@
     <script>
       const dataPlace = document.getElementById('dataPlace');
 
-      fetch('https://nameless-api.vercel.app/api-anggota')
+      fetch('http://localhost:1000/members-api')
       .then(response => response.json())
       .then(data => {
         var output = '';
@@ -99,7 +99,7 @@
             <td><img src="${data.photo}" style="width: 30px; height: 30px; border-radius: 100%;"></td>
             <td>${data.name}</td>
             <td>${data.position}</td>
-            <td><a href="/delete/${data.name}" class="btn btn-danger badge">Delete</a></td>
+            <td><a href="/delete/${data._id}" class="btn btn-danger badge">Delete</a></td>
           </tr>
           `
         })

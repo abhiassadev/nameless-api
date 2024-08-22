@@ -1,87 +1,99 @@
 const express = require('express');
-const fs = require('fs');
+const mongoose = require('mongoose');
+const multer = require('multer');
 const path = require('path');
-const cors = require('cors');
 const app = express();
-const port = 5000;
+const port = 1000;
+const url = "mongodb+srv://abhiassaproject:abhiassa@abhiassacluster.vdvvi.mongodb.net/namelessDB?retryWrites=true&w=majority&appName=abhiassaCluster"
 
-app.use(cors());
-app.use(express.urlencoded({ extended: true }));
+const User = require('./models/user.js');
 
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
+app.use(express.json());
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
 });
 
+const upload = multer({ storage: storage });
+
+app.use(express.urlencoded({ extended: true, }));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+mongoose.connect(url)
+.then(() => console.log("Connected..."))
+.catch(err => console.log("Error", err))
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.get('/api-anggota', (req, res) => {
+app.get('/members-api', async (req, res) => {
     try {
-        const dataPath = path.join(__dirname, 'database', 'anggota.json');
-        const data = fs.readFileSync(dataPath, 'utf-8');
-        const dataParse = JSON.parse(data);
-
-        res.json(dataParse);
+        const users = await User.find();
+        res.json(users);
     } catch (err) {
-        console.error('Error reading file:', err);
-        res.status(500).send('Internal server error');
+        res.status(500).send("Server error...");
     }
 });
-
-// app.get('/api-galeri', (req, res) => {
-//     const data = fs.readFileSync('./database/galeri.json', 'utf-8');
-//     const dataParse = JSON.parse(data);
-
-//     res.send(dataParse)
-//     res.end();
-// });
 
 app.get('/members', (req, res) => {
     try {
         res.sendFile(path.join(__dirname, 'public', 'members.html'));
-    } catch (err) {
-        console.error('Error reading file:', err);
-        res.status(500).send('Internal server error');
+    } catch {
+        console.log('File not found');
     }
 });
 
-app.post('/add', (req, res) => {
-    console.log('POST /add toute hit')
+app.post('/add', upload.single('photo'), async (req, res) => {
     try {
-        const dataPath = path.join(__dirname, 'database', 'anggota.json');
-        const dataOnDb = fs.readFileSync(dataPath, 'utf-8');
-        const dataParse = JSON.parse(dataOnDb);
+        console.log(req.file);
+        const { name, position, social} = req.body;
+        const photo = req.file ? req.file.path : ''
 
-        dataParse.push(req.body);
-        fs.writeFileSync(dataPath, JSON.stringify(dataParse));
+        if (!name || !position || !social || !photo ) {
+            return res.status(400).send('Tidak ada data yang ditambahkan')
+        };
+
+        const newUser = new User({
+            name,
+            position,
+            social,
+            photo,
+        });
+
+        await newUser.save();
+
         res.redirect('/members');
     } catch (err) {
-        console.error('Error reading file:', err);
-        res.status(500).send('Internal server error')
+        return console.error('Error:', err);
+        res.status(500).send('Error...');
     }
 });
 
-app.get('/delete/:name', (req, res) => {
+app.get('/delete/:id', async (req, res) => {
     try {
-        const dataPath = path.join(__dirname, 'database', 'anggota.json');
-        const dataOnDb = fs.readFileSync(dataPath, 'utf-8');
-        const dataParse = JSON.parse(dataOnDb);
-        const deleteData = dataParse.filter((data) => data.name !== req.params.name);
+        const { id } = req.params;
+        const user = await User.findById(id);
 
-       
-        fs.writeFileSync(dataPath, JSON.stringify(deleteData));
+        await User.findByIdAndDelete(id);
         res.redirect('/members');
     } catch (err) {
-        console.error('Error reading file:', err);
-        res.status(500).send('Internal server error')
+        console.error(err)
     }
 })
 
-app.use(express.static('public'));
+app.get('/gallery-api', (req,res) => {
+    res.send('Sedang diproses ngab....');
+})
+
+app.get('/gallery', (req,res) => {
+    res.send('Sedang diproses ngab....');
+})
 
 app.listen(port, () => {
     console.log(`Server running on port http://localhost:${port}`);
