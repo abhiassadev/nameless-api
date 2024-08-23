@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cloudinary = require('cloudinary').v2;
 const multer = require('multer');
 const path = require('path');
 const app = express();
@@ -10,26 +11,26 @@ const User = require('./models/user.js');
 
 app.use(express.json());
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/');
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname));
-    }
-});
-
-const upload = multer({ storage: storage });
-
-app.use(express.urlencoded({ extended: true, }));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 mongoose.connect(url)
 .then(() => console.log("Connected..."))
 .catch(err => console.log("Error", err))
 
+cloudinary.config({
+    cloud_name: "dly5mdfrl",
+    api_key: "686751942755659",
+    api_secret: "z9kBrIFtSQrwV4Xp3kvn5nGjZq8"
+});
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
+app.use(express.urlencoded({ extended: true, }));
+
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.render('index');
 });
 
 app.get('/members-api', async (req, res) => {
@@ -41,9 +42,13 @@ app.get('/members-api', async (req, res) => {
     }
 });
 
-app.get('/members', (req, res) => {
+app.get('/members', async (req, res) => {
     try {
-        res.sendFile(path.join(__dirname, 'public', 'members.html'));
+        const users = await User.find();
+        res.render('members', {
+            title: "NMS | Members",
+            data: users,
+        });
     } catch {
         console.log('File not found');
     }
@@ -51,19 +56,29 @@ app.get('/members', (req, res) => {
 
 app.post('/add', upload.single('photo'), async (req, res) => {
     try {
-        console.log(req.file);
         const { name, position, social} = req.body;
-        const photo = req.file ? req.file.path : ''
 
-        if (!name || !position || !social || !photo ) {
+        if (!name || !position || !social || !req.file) {
             return res.status(400).send('Tidak ada data yang ditambahkan')
         };
 
+        const result = await new Promise ((resolve, reject) => {
+            cloudinary.uploader.upload_stream(
+                { resource_type: 'image' },
+                (error, result) => {
+                    if (error) {
+                        return reject(error)
+                    }
+                    resolve(result);
+                }
+            ).end(req.file.buffer);
+        });
+// console.log(result.secure_url)
         const newUser = new User({
             name,
             position,
             social,
-            photo,
+            photo: result.secure_url,
         });
 
         await newUser.save();

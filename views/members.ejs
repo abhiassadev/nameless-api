@@ -1,0 +1,60 @@
+<%- include('./component/header.ejs') %>
+<%- include('./component/navbar.ejs') %>
+<div class="">
+  <div class="container-fluid py-3 d-flex justify-contect-end align-items-center">
+    <button class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" aria-controls="offcanvas">Add Member</button>
+  </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Photo</th>
+          <th scope="col">Name</th>
+          <th scope="col">Position</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% var id = 1; %>
+        <% data.forEach((data, index) => { %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><img src=" <%= data.photo %> " style="height: 30px; width: 30px; border-radius: 100%;"></td>
+            <td><%= data.name %></td>
+            <td><%= data.position %></td>
+            <td><a href="/delete/<%= data.id %>" class="btn btn-danger">Delete</a></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasExampleLabel">Add Members</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <form action="/add" method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" id="name" placeholder="Enter name..." name="name">
+        </div>
+        <div class="mb-3">
+          <label for="position" class="form-label">Position</label>
+          <input type="text" class="form-control" id="position" placeholder="Enter position..." name="position">
+        </div>
+        <div class="mb-3">
+          <label for="social" class="form-label">Social</label>
+          <input type="text" class="form-control" id="social" placeholder="https://www.instagram.com/username" name="social">
+        </div>
+        <div class="mb-3">
+          <label for="photo" class="form-label">Photo</label>
+          <input type="file" class="form-control" id="photo" placeholder="Input Photo..." name="photo">
+        </div>
+        <div class="mb-3">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+<%- include('./component/footer.ejs') %>

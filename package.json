@@ -9,9 +9,12 @@
   "author": "abhiassadev",
   "license": "ISC",
   "dependencies": {
+    "cloudinary": "^2.4.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
     "express": "^4.19.2",
+    "gridfs-stream": "^1.1.1",
     "mongodb": "^6.8.0",
     "mongoose": "^8.5.3",
     "multer": "^1.4.5-lts.1",
