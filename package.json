@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index"
+    "start": "nodemon index",
+    "tailwindcss": "npx tailwindcss -i ./public/style/input.css -o ./public/style/output.css --watch"
   },
   "author": "abhiassadev",
   "license": "ISC",
@@ -19,5 +20,8 @@
     "mongoose": "^8.5.3",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^3.1.4"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.10"
   }
 }

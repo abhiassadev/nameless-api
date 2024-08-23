@@ -10,6 +10,7 @@ const url = "mongodb+srv://abhiassaproject:abhiassa@abhiassacluster.vdvvi.mongod
 const User = require('./models/user.js');
 
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -30,7 +31,9 @@ const upload = multer({ storage: storage });
 app.use(express.urlencoded({ extended: true, }));
 
 app.get('/', (req, res) => {
-    res.render('index');
+    res.render('index', {
+        title: "Nameless Management System"
+    });
 });
 
 app.get('/members-api', async (req, res) => {
@@ -73,7 +76,7 @@ app.post('/add', upload.single('photo'), async (req, res) => {
                 }
             ).end(req.file.buffer);
         });
-// console.log(result.secure_url)
+
         const newUser = new User({
             name,
             position,

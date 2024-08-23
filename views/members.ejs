@@ -1,34 +1,50 @@
 <%- include('./component/header.ejs') %>
 <%- include('./component/navbar.ejs') %>
-<div class="">
-  <div class="container-fluid py-3 px-5" style="display: flex; justify-content: end; align-items: flex-end;">
-    <button class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" aria-controls="offcanvas">Add Member</button>
+<div class="container-fluid px-4 py-4">
+  <div class="container-fluid" style="display: flex; justify-content: flex-end; align-items: flex-end;">
+    <button class="btn btn-primary shadow-sm" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" aria-controls="offcanvas">Add Member</button>
   </div>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">ID</th>
-          <th scope="col">Photo</th>
-          <th scope="col">Name</th>
-          <th scope="col">Position</th>
-          <th scope="col">Social</th>
-          <th scope="col">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% data.forEach((data, index) => { %>
-          <tr>
-            <td style="vertical-align: middle;"><%= index + 1 %></td>
-            <td style="vertical-align: middle;"><img src=" <%= data.photo %> " style="height: 30px; width: 30px; border-radius: 100%;"></td>
-            <td style="vertical-align: middle;"><%= data.name %></td>
-            <td style="vertical-align: middle;"><%= data.position %></td>
-            <td style="vertical-align: middle;"><%= data.social %></td>
-            <td><a href="/delete/<%= data.id %>" class="btn btn-danger">Delete</a></td>
-          </tr>
-        <% }); %>
-      </tbody>
-    </table>
+  <div class="container-fluid" style="display: flex; justify-content: start; align-items: center;">
+    <h1 class="">Members</h1>
   </div>
+  <div class="d-flex flex-column py-4 gap-4">
+    <% data.forEach(data => { %>
+      <div class="border rounded py-2 px-3 shadow">
+        <div class="d-flex gap-3 border-bottom py-2">
+          <div class="">
+            <img src="<%= data.photo %>" style="height: 40px; width: 40px; border-radius: 100%;">
+          </div>
+          <div class="d-flex flex-column">
+            <h6 class="mb-0" style="font-weight: bold;"> <%= data.name %> </h6>
+            <p class="mb-0" style="font-size: 15px;"> <%= data.position %> </p>
+          </div>
+        </div>
+        <div class="d-flex gap-3 align-items-center" style="height: 60px;">
+          <div class="">
+            <p class="mb-0" style="font-size: 17px;">Cash :</p>
+          </div>
+          <div class="">
+            <p class="mb-0" style="font-size: 17px;">50.000,00</p>
+          </div>
+        </div>
+        <div class="d-flex gap-3">
+          <a href="" class="btn btn-success">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+              <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+              <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+            </svg>
+          </a>
+          <a href="/delete/<%= data._id %>" class="btn btn-danger">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+              <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+   <% }); %>
+  </div>
+</div>
   <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasExampleLabel">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title" id="offcanvasExampleLabel">Add Members</h5>
