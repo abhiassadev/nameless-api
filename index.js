@@ -3,12 +3,12 @@ const mongoose = require('mongoose');
 const cloudinary = require('cloudinary').v2;
 const multer = require('multer');
 const path = require('path');
-const bodyParse = require('body-parser');
 const app = express();
 const port = 1000;
 const url = "mongodb+srv://abhiassaproject:abhiassa@abhiassacluster.vdvvi.mongodb.net/namelessDB?retryWrites=true&w=majority&appName=abhiassaCluster"
 
 const User = require('./models/user.js');
+const Galleries = require('./models/galleries.js');
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -29,8 +29,6 @@ cloudinary.config({
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
-
-app.use(express.urlencoded({ extended: true, }));
 
 app.get('/', (req, res) => {
     res.render('index', {
@@ -107,48 +105,77 @@ app.get('/delete/:id', async (req, res) => {
     }
 })
 
-app.get('/gallery-api', (req, res) => {
-    res.send('Sedang diproses ngab....');
-})
-
-app.get('/gallery', (req, res) => {
-    res.send('Sedang diproses ngab....');
-})
-
-app.post('/update-cash', async (req, res) => {
-    const { name, cash } = req.body;
-    console.log(req.body)
-    if (!name || cash === undefined) {
-        return res.status(500).send('Tidak ada data')
-    }
-
-    const parsedCash = parseFloat(cash);
-
-    if (isNaN(parsedCash)) {
-        return res.status(400).send('Cash invalid')
-    }
-
+app.post('/add-image', upload.single('image'), async (req, res) => {
     try {
-        const result = await User.updateOne({ name: name }, { $inc: { cash: parsedCash } });
+        console.log(req.body)
+        const name = req.body.name;
+        const now = new Date();
+        const date = now.toISOString().split('T')[0];
 
-        if (result.modifiedCount === 0) {
-            return res.status(404).send('User tidak ditemukan')
+        if (!name || !req.file) {
+            res.status(400).send('Tidak ada data yang ditambahkan')
         }
 
-        res.redirect('/cash');
+        const result = await new Promise ((resolve, reject) => {
+            cloudinary.uploader.upload_stream(
+                { resource_type: 'image' },
+                (error, result) => {
+                    if (error) {
+                        return reject(error);
+                    }
+                    resolve(result);
+                }
+            ).end(req.file.buffer);
+        })
+
+        const newImage = new Galleries({
+            name,
+            image: result.secure_url,
+            date,
+        });
+
+        await newImage.save();
+        res.redirect('/galleries');
+
     } catch (err) {
-        console.log('Error:', err)
+        return console.error('Error:', err);
+        res.status(500).send('Error:', err);
     }
 })
 
-app.get('/cash-api', (req,res) => {
-    res.send('Sedang diproses ngab....');
+app.get('/galleries-api', async (req, res) => {
+    try {
+        const galleries = await Galleries.find();
+
+        res.json(galleries);
+    } catch {
+        console.log('File not found');
+    }
 })
 
-app.get('/cash', (req,res) => {
-    res.render('cash', {
-        title: "NMS | Cash"
-    })
+app.get('/galleries', async (req, res) => {
+    try {
+        const galleries = await Galleries.find();
+
+        res.render('galleries', {
+            title: "NMS | Gallery",
+            data: galleries,
+        });
+    } catch {
+        console.log('File not found');
+    }
+})
+
+app.get('/delete/image/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const galleries = await Galleries.findById(id);
+
+        await Galleries.findByIdAndDelete(id);
+        res.redirect('/galleries');
+    } catch (err) {
+        console.error(err)
+    }
 })
 
 app.listen(port, () => {

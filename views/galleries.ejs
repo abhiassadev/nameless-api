@@ -1,0 +1,53 @@
+<%- include('./component/header.ejs') %>
+<%- include('./component/navbar.ejs') %>
+<div class="d-flex flex-column px-3">
+  <div class="d-flex flex-column gap-4 py-4 border-bottom">
+    <div class="container-fluid" style="display: flex; justify-content: start; align-items: center;">
+      <h3 class="">All Images <%= data.length %></h3>
+    </div>
+    <div class="container-fluid" style="display: flex; justify-content: flex-start; align-items: flex-start;">
+      <button class="btn btn-primary shadow-sm" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" aria-controls="offcanvas">Add</button>
+    </div>
+  </div>
+  <div class="d-flex flex-column py-4 gap-4" style="justify-content: center; align-items: center;">
+   <% if (data.length > 0) { %>
+      <% data.forEach(data => { %>
+        <div class="card" style="width: 18rem;">
+          <img src=" <%= data.image %> " class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title"> <%= data.name %> </h5>
+            <p class="card-text"> <%= data.date %> </p>
+            <a href="/delete/image/<%= data._id %>" class="btn btn-danger">Delete</a>
+          </div>
+        </div>
+     <% }) %>
+   <% } else { %>
+    <div class="d-flex flex-column" style="justify-content: center; align-items: center;">
+      <h6 class="">Tidak ada data</h6>
+      <img src="./images/sapiens.svg" style="height: 50vh; width: 50vh;">
+    </div>
+ <% }; %>
+  </div>
+</div>
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasExampleLabel">Add Image</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <form action="/add-image" method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" id="name" placeholder="Enter name..." name="name">
+        </div>
+        <div class="mb-3">
+          <label for="image" class="form-label">Image</label>
+          <input type="file" class="form-control" id="image" placeholder="Input image..." name="image">
+        </div>
+        <div class="mb-3">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+<%- include('./component/footer.ejs') %>

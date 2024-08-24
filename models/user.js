@@ -5,7 +5,6 @@ const userSchema = new mongoose.Schema({
     position: String,
     social: String,
     photo: String,
-    cash: Number,
 });
 
 const User = mongoose.model('user', userSchema);
