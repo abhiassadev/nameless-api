@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cloudinary = require('cloudinary').v2;
 const multer = require('multer');
 const path = require('path');
+const bodyParse = require('body-parser');
 const app = express();
 const port = 1000;
 const url = "mongodb+srv://abhiassaproject:abhiassa@abhiassacluster.vdvvi.mongodb.net/namelessDB?retryWrites=true&w=majority&appName=abhiassaCluster"
@@ -11,6 +12,7 @@ const User = require('./models/user.js');
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: true, }));
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -105,12 +107,48 @@ app.get('/delete/:id', async (req, res) => {
     }
 })
 
-app.get('/gallery-api', (req,res) => {
+app.get('/gallery-api', (req, res) => {
     res.send('Sedang diproses ngab....');
 })
 
-app.get('/gallery', (req,res) => {
+app.get('/gallery', (req, res) => {
     res.send('Sedang diproses ngab....');
+})
+
+app.post('/update-cash', async (req, res) => {
+    const { name, cash } = req.body;
+    console.log(req.body)
+    if (!name || cash === undefined) {
+        return res.status(500).send('Tidak ada data')
+    }
+
+    const parsedCash = parseFloat(cash);
+
+    if (isNaN(parsedCash)) {
+        return res.status(400).send('Cash invalid')
+    }
+
+    try {
+        const result = await User.updateOne({ name: name }, { $inc: { cash: parsedCash } });
+
+        if (result.modifiedCount === 0) {
+            return res.status(404).send('User tidak ditemukan')
+        }
+
+        res.redirect('/cash');
+    } catch (err) {
+        console.log('Error:', err)
+    }
+})
+
+app.get('/cash-api', (req,res) => {
+    res.send('Sedang diproses ngab....');
+})
+
+app.get('/cash', (req,res) => {
+    res.render('cash', {
+        title: "NMS | Cash"
+    })
 })
 
 app.listen(port, () => {
