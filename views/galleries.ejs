@@ -37,12 +37,12 @@
     <div class="offcanvas-body">
       <form action="/add-image" method="POST" enctype="multipart/form-data">
         <div class="mb-3">
-          <label for="name" class="form-label">Name</label>
-          <input type="text" class="form-control" id="name" placeholder="Enter name..." name="name">
+          <label for="name" class="form-label">Image Name</label>
+          <input type="text" class="form-control" id="name" placeholder="Input name..." name="name" required>
         </div>
         <div class="mb-3">
           <label for="image" class="form-label">Image</label>
-          <input type="file" class="form-control" id="image" placeholder="Input image..." name="image">
+          <input type="file" class="form-control" id="image" placeholder="Input image..." name="image" required>
         </div>
         <div class="mb-3">
           <button type="submit" class="btn btn-primary">Submit</button>
