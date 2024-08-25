@@ -11,10 +11,6 @@
             "src": "/members-api",
             "dest": "index.js"
         },
-{
-"src": "/gallery-api",
-"dest": "index.js"
-},
         {
             "src": "/members",
             "dest": "index.js"
@@ -27,10 +23,22 @@
             "src": "/delete/(.*)",
             "dest": "index.js"
         },
-{
-"src": "/gallery",
-"dest": "index.js"
-},
+        {
+            "src": "/galleries-api",
+            "dest": "index.js"
+        },
+        {
+            "src": "/galleries",
+            "dest": "index.js"
+        },
+        {
+            "src": "/add-image",
+            "dest": "index.js"
+        },
+        {
+            "src": "/delete/image/(.*)",
+            "dest": "index.js"
+        },
         {
             "src": "/(.*)",
             "dest": "/public/$1"

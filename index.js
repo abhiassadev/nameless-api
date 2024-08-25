@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cloudinary = require('cloudinary').v2;
 const multer = require('multer');
 const path = require('path');
+const cors = require('cors');
 const app = express();
 const port = 1000;
 const url = "mongodb+srv://abhiassaproject:abhiassa@abhiassacluster.vdvvi.mongodb.net/namelessDB?retryWrites=true&w=majority&appName=abhiassaCluster"
@@ -13,6 +14,7 @@ const Galleries = require('./models/galleries.js');
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true, }));
+app.use(cors());
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -158,7 +160,7 @@ app.get('/galleries', async (req, res) => {
         const galleries = await Galleries.find();
 
         res.render('galleries', {
-            title: "NMS | Gallery",
+            title: "NMS | Galleries",
             data: galleries,
         });
     } catch {
