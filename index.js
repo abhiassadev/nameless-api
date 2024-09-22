@@ -1,12 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cloudinary = require('cloudinary').v2;
+const https = require('https');
 const multer = require('multer');
 const path = require('path');
 const cors = require('cors');
 const app = express();
 const port = 1000;
 const url = "mongodb+srv://abhiassaproject:abhiassa@abhiassacluster.vdvvi.mongodb.net/namelessDB?retryWrites=true&w=majority&appName=abhiassaCluster"
+
 
 const User = require('./models/user.js');
 const Galleries = require('./models/galleries.js');
@@ -19,9 +21,81 @@ app.use(cors());
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+let isDbConnected = false;
+var dbStatus = '';
+var webStatus = '';
+var membersApiStatus = '';
+var galleriesApiStatus = '';
+
 mongoose.connect(url)
-.then(() => console.log("Connected..."))
-.catch(err => console.log("Error", err))
+.then(connect => {
+    dbStatus = 'Connected';
+    isDbConnected = true;
+    console.log(`Database Status : ${dbStatus}`);
+})
+.catch(err => {
+    dbStatus = 'Disconnect';
+    isDbConnected = false;
+    console.log(`Database Status : ${dbStatus}`);
+})
+
+const checkDbConnection = (req, res, next) => {
+    if (!isDbConnected) {
+        dbStatus = 'Disconnect'; 
+    }
+    next();
+};
+
+const checkGalleriesApiStatus = () => {
+    return new Promise ((resolve) => {
+        https.get('https://namelesssystem.vercel.app/galleries-api', (res) => {
+            if (res.statusCode === 200) {
+                galleriesApiStatus = 'Ready';
+            } else {
+                galleriesApiStatus += 'Not Ready';
+            };
+            resolve(galleriesApiStatus)
+        }).on('error', (e) => {
+            galleriesApiStatus = 'Not Ready';
+            console.log(e.message);
+            resolve(galleriesApiStatus)
+        });
+    })
+};
+
+const checkWebStatus = () => {
+    return new Promise ((resolve) => {
+        https.get('https://namelesssystem.vercel.app/', (res) => {
+            if (res.statusCode === 200) {
+                webStatus = 'Online';
+            } else {
+                webStatus += 'Offline';
+            };
+            resolve(webStatus)
+        }).on('error', (e) => {
+            webStatus = 'Offline';
+            console.log(e.message);
+            resolve(webStatus)
+        });
+    })
+};
+
+const checkMembersApiStatus = () => {
+    return new Promise ((resolve) => {
+        https.get('https://namelesssystem.vercel.app/members-api', (res) => {
+            if (res.statusCode === 200) {
+                membersApiStatus = 'Ready';
+            } else {
+                membersApiStatus += 'Not Ready';
+            };
+            resolve(membersApiStatus)
+        }).on('error', (e) => {
+            membersApiStatus = 'Not Ready';
+            console.log(e.message);
+            resolve(membersApiStatus)
+        });
+    })
+};
 
 cloudinary.config({
     cloud_name: "dly5mdfrl",
@@ -32,9 +106,17 @@ cloudinary.config({
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
+    const webStatus = await checkWebStatus();
+    const galleriesApiStatus = await checkGalleriesApiStatus();
+    const membersApiStatus = await checkMembersApiStatus();
+
     res.render('index', {
-        title: "Nameless Management System"
+        title: "Nameless Management System",
+        dbStatus: dbStatus,
+        webStatus: webStatus,
+        galleriesApiStatus: galleriesApiStatus,
+        membersApiStatus: membersApiStatus,
     });
 });
 
